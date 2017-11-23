@@ -37,3 +37,26 @@ def btc(bot, trigger):
 
     except Exception:
         return bot.say("Failed to check the bitstamp price")
+
+@commands('bch')
+def bch(bot, trigger):
+    """Tells information about bitcoin cash"""
+
+    command = trigger.group(2)
+
+    if not command:
+        command = price
+
+    try:
+        bytes = web.get('https://api.bitfinex.com/v2/candles/trade:1m:tBCHUSD/last')
+        result = json.loads(bytes)
+
+        msg = "bitfinex: %s high: %s low: %s" % (
+            result[2],
+            result[3],
+            result[4]
+        )
+        bot.say(msg)
+
+    except Exception:
+        return bot.say("Failed to check the bitfinex price")
